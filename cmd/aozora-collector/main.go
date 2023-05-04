@@ -25,7 +25,7 @@ type Entry struct {
 	Author   string
 	TitleID  string
 	Title    string
-	InfoURL  string
+	SiteURL  string
 	ZipURL   string
 }
 
@@ -52,7 +52,7 @@ func findEntries(siteURL string) ([]Entry, error) {
 				Author:   author,
 				TitleID:  token[2],
 				Title:    title,
-				InfoURL:  siteURL,
+				SiteURL:  siteURL,
 				ZipURL:   zipURL,
 			})
 		}
