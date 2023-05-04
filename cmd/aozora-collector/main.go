@@ -30,7 +30,7 @@ type Entry struct {
 }
 
 func findEntries(siteURL string) ([]Entry, error) {
-	doc, err := goquery.NewDocument(siteURL)
+	doc, err := newDocument(siteURL)
 	if err != nil {
 		return nil, err
 	}
@@ -61,8 +61,18 @@ func findEntries(siteURL string) ([]Entry, error) {
 	return entries, nil
 }
 
+func newDocument(siteURL string) (*goquery.Document, error) {
+	resp, err := http.Get(siteURL)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return goquery.NewDocumentFromReader(resp.Body)
+}
+
 func findAuthorAndZIP(siteURL string) (string, string) {
-	doc, err := goquery.NewDocument(siteURL)
+	doc, err := newDocument(siteURL)
 	if err != nil {
 		return "", ""
 	}
